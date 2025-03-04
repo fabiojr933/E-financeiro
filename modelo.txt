@@ -1,11 +1,39 @@
 CREATE TABLE usuarios (
-  id bigint(20) UNSIGNED NOT NULL,
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nome varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   telefone varchar(25) NOT NULL,
   senha_hash text NOT NULL,
-  criado_em timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  criado_em timestamp NOT NULL DEFAULT current_timestamp())
+
+
+CREATE TABLE nembros (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,   
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id));
+
+
+CREATE TABLE carteiras (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,   
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id));
+
+CREATE TABLE condicoes_pagamento (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,   
+    tipo VARCHAR(255) NOT NULL,   
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id));
+
+
+
+
+
 
 CREATE TABLE clientes (
     id SERIAL PRIMARY KEY,

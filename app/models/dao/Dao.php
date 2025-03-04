@@ -5,7 +5,7 @@ use app\core\Model;
 class Dao extends Model{    
     public function lista($tabela){
         return  $this->all($this->db, $tabela);
-    }    
+    } 
     
     public function get($tabela, $campo, $valor, $eh_lista){
         return  $this->find($this->db,$campo, $valor, $tabela, $eh_lista);
