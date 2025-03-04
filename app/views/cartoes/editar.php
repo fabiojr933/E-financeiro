@@ -1,6 +1,6 @@
 <div class="content-wrapper">
   <div class="content-header">
-    <div class="container-fluid">
+    <div class="cartoesiner-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0"> </h1>
@@ -15,10 +15,10 @@
     </div>
   </div>
   <section class="content">
-    <div class="container-fluid">
+    <div class="cartoesiner-fluid">
       <div class="card">
         <div class="card-footer clearfix">
-          <a href="<?php echo URL_BASE ?>conta/index" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
+          <a href="<?php echo URL_BASE ?>cartoes/index" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
         </div>
 
 
@@ -30,25 +30,26 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form>
+            <form action="<?php echo URL_BASE ?>cartoes/salvar" method="post">
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Titular</label>
-                  <input type="text" class="form-control" placeholder="Nome">
+                  <input type="text" class="form-control" placeholder="Nome" name="titular" value="<?php echo $cartoes->titular ?>">
+                  <input type="text" class="form-control" hidden  name="id" value="<?php echo $cartoes->id ?>">
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Nome do cartão</label>
-                      <input type="text" class="form-control" placeholder="cartao">
+                      <input type="text" class="form-control" placeholder="cartao" name="nome" value="<?php echo $cartoes->nome ?>">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Minimal</label>
-                      <select class="form-control select2" style="width: 100%;">
-                        <option>Debito</option>
-                        <option>Credito</option>
+                      <select class="form-control select2" style="width: 100%;" name="tipo">
+                      <option value="Debito" <?php echo ($cartoes->tipo == "Debito") ? "selected" : ""; ?>>Débito</option>
+                      <option value="Credito" <?php echo ($cartoes->tipo == "Credito") ? "selected" : ""; ?>>Crédito</option>
                       </select>
                     </div>
                   </div>
@@ -56,7 +57,7 @@
               </div>
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
               </div>
             </form>
           </div>

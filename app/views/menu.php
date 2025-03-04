@@ -48,7 +48,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>conta/index" class="nav-link">
+              <a href="<?php echo URL_BASE ?>cartoes/index" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Cartões</p>
               </a>
