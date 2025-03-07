@@ -3,15 +3,14 @@
 namespace app\models\dao;
 
 use app\core\Model;
-use PDO;
 
-class Pagamento extends Model
+class Fornecedor extends Model
 {
 
     public function lista_id($ID_USUARIO)
     {
         try {
-            $sql = "SELECT * FROM condicoes_pagamento P WHERE P.ID_USUARIO = $ID_USUARIO";
+            $sql = "SELECT * FROM Fornecedores P WHERE P.ID_USUARIO = $ID_USUARIO";
             $qry = $this->db->prepare($sql);
             $qry->execute();
             return $qry->fetchAll(\PDO::FETCH_OBJ);
@@ -19,5 +18,4 @@ class Pagamento extends Model
             throw new \Exception($e->getMessage());
         }
     }
-    
 }

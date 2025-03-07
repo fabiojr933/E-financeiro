@@ -1,21 +1,9 @@
 <div class="content-wrapper">
   <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0"> </h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?php echo URL_BASE ?>assets/#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
-          </ol>
-        </div>
-      </div>
-    </div>
+
   </div>
   <section class="content">
-    <div class="container-fluid">
+    <div class="fluxoiner-fluid">
       <div class="card">
         <div class="card-footer clearfix">
           <a href="<?php echo URL_BASE ?>fluxo/index" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
@@ -30,17 +18,17 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form>
+            <form action="<?php echo URL_BASE ?>fluxo/salvar" method="post">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Nome</label>
-                  <input type="text" class="form-control" placeholder="Nome">
+                  <label for="exampleInputEmail1">Descrição</label>
+                  <input type="text" class="form-control" placeholder="Nome" name="nome">
                 </div>
-                <div class="row">                 
+                <div class="row">                  
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label>Tipo</label>
-                      <select class="form-control select2" style="width: 100%;">
+                      <label>Minimal</label>
+                      <select class="form-control select2bs4" style="width: 100%;" name="tipo">
                         <option>Entrada</option>
                         <option>Saida</option>
                       </select>
@@ -50,7 +38,7 @@
               </div>
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
               </div>
             </form>
           </div>

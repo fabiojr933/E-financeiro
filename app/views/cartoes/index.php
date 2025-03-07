@@ -1,18 +1,5 @@
 <div class="content-wrapper">
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0"> </h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?php echo URL_BASE ?>assets/#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
-          </ol>
-        </div>
-      </div>
-    </div>
+  <div class="content-header">   
   </div>
   <section class="content">
     <div class="container-fluid">
@@ -41,7 +28,7 @@
                   <tr>
                     <td><?php echo $cartoes->id ?></td>
                     <td><?php echo $cartoes->nome ?></td>
-                    <td><?php echo $cartoes->tipo ?></td>
+                    <td><small class="badge badge-<?php echo ($cartoes->tipo == "Debito") ? "info" : "danger" ?>"><?php echo $cartoes->tipo ?></small></td>                 
                     <td class="d-flex justify-content-end"> <!-- Alinha as ações à direita -->
                       <a href="<?php echo URL_BASE . "cartoes/editar/" . $cartoes->id ?>" class="btn btn-success btn-sm me-1">
                         <i class="fas fa-edit"></i>

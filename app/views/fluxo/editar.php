@@ -1,58 +1,57 @@
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0"> </h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?php echo URL_BASE ?>assets/#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol>
-                </div>
-            </div>
+  <div class="content-header">
+
+  </div>
+  <section class="content">
+    <div class="fluxoiner-fluid">
+      <div class="card">
+        <div class="card-footer clearfix">
+          <a href="<?php echo URL_BASE ?>fluxo/index" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
         </div>
-    </div>
-    <section class="content">
-        <div class="container-fluid">
-        <div class="card">                        
-              <div class="card-footer clearfix">
-              <a href="<?php echo URL_BASE ?>fluxo/novo" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
-              </div>
 
 
-              <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Preencha os dados abaixo</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form>
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Nome</label>
-                    <input type="text" class="form-control"  placeholder="Nome" value="Teste">
-                  </div> 
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Preencha os dados abaixo</h3>
             </div>
-            <!-- /.card -->
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form action="<?php echo URL_BASE ?>fluxo/salvar" method="post">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Descrição</label>
+                  <input type="text" class="form-control" placeholder="Nome" name="nome" value="<?php echo $fluxo->nome ?>">
+                  <input type="text" class="form-control" hidden name="id" value="<?php echo $fluxo->id ?>">
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Tipo</label>
+                      <select class="form-control select2bs4" style="width: 100%;" name="tipo">
+                        <option value="Entrada" <?php echo ($fluxo->tipo == "Entrada") ? "selected" : ""; ?>>Entrada</option>
+                        <option value="Saida" <?php echo ($fluxo->tipo == "Saida") ? "selected" : ""; ?>>Saida</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-        
-
-
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+              </div>
+            </form>
           </div>
-          <!--/.col (left) -->
-            </div>
-            </div> 
+          <!-- /.card -->
+
+
+
+
         </div>
-    </section>
+        <!--/.col (left) -->
+      </div>
+    </div>
+</div>
+</section>
 </div>

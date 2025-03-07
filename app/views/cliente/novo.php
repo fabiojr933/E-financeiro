@@ -1,18 +1,6 @@
 <div class="content-wrapper">
     <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0"> </h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?php echo URL_BASE ?>assets/#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
+      
     </div>
     <section class="content">
         <div class="container-fluid">
@@ -30,17 +18,17 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form>
+              <form action="<?php echo URL_BASE ?>cliente/salvar" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
-                    <input type="text" class="form-control"  placeholder="Nome">
+                    <input type="text" class="form-control"  placeholder="Nome" name="nome" required>
                   </div> 
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
               </form>
             </div>

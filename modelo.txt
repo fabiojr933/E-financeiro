@@ -31,6 +31,29 @@ CREATE TABLE condicoes_pagamento (
 
 CREATE TABLE cartoes (
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    titular VARCHAR(255) NOT NULL,  
+    nome VARCHAR(255) NOT NULL,   
+    tipo VARCHAR(255) NOT NULL,   
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id));
+
+CREATE TABLE fornecedores (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,   
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id));
+
+CREATE TABLE clientes (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,   
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id));
+
+CREATE TABLE fluxo_financeiro (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     nome VARCHAR(255) NOT NULL,   
     tipo VARCHAR(255) NOT NULL,   
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -40,67 +63,58 @@ CREATE TABLE cartoes (
 
 
 
-
-CREATE TABLE clientes (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    documento VARCHAR(20) UNIQUE NOT NULL,
-    telefone VARCHAR(20),
-    email VARCHAR(255),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE fornecedores (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    documento VARCHAR(20) UNIQUE NOT NULL,
-    telefone VARCHAR(20),
-    email VARCHAR(255),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE condicoes_pagamento (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE lancamentos (
+     id int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     descricao VARCHAR(255) NOT NULL,
-    quantidade_parcelas INT NOT NULL,
-    intervalo_dias INT NOT NULL
-);
+    valor DECIMAL(15,2) NOT NULL,  
+    data_pag DATE NOT NULL,
+    tipo VARCHAR(50),
+    observacao VARCHAR(50),    
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_usuario INT NOT NULL,
+    id_nembro INT,
+    id_carteira INT,
+    id_cartao INT,
+    id_condicao_pagamento INT,
+    id_fluxo_financeiro INT,  
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_nembro) REFERENCES nembros(id),
+    FOREIGN KEY (id_carteira) REFERENCES carteiras(id),
+    FOREIGN KEY (id_cartao) REFERENCES cartoes(id),
+    FOREIGN KEY (id_condicao_pagamento) REFERENCES condicoes_pagamento(id),
+    FOREIGN KEY (id_fluxo_financeiro) REFERENCES fluxo_financeiro(id));
+   
 
-CREATE TABLE carteiras (
-    id SERIAL PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
-    saldo DECIMAL(15,2) NOT NULL DEFAULT 0.00
-);
 
-CREATE TABLE bancos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    agencia VARCHAR(20),
-    conta VARCHAR(20),
-    saldo DECIMAL(15,2) NOT NULL DEFAULT 0.00
-);
 
-CREATE TABLE fluxos_financeiros (
-    id SERIAL PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
-    tipo VARCHAR(50) CHECK (tipo IN ('entrada', 'saida', 'cartao_credito', 'saida_bancaria'))
-);
+
 
 CREATE TABLE contas_pagar (
-    id SERIAL PRIMARY KEY,
-    fornecedor_id INT REFERENCES fornecedores(id),
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     descricao VARCHAR(255) NOT NULL,
     valor DECIMAL(15,2) NOT NULL,
     valor_pago DECIMAL(15,2) DEFAULT 0.00,
-    vencimento DATE NOT NULL,
-    fluxo_id INT REFERENCES fluxos_financeiros(id),
+    vencimento DATE NOT NULL,   
     pago BOOLEAN DEFAULT FALSE,
     pago_em DATE,
-    carteira_id INT REFERENCES carteiras(id),
-    banco_id INT REFERENCES bancos(id),
-    cartao_id INT REFERENCES cartoes_credito(id),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    observacao VARCHAR(255), 
+    id_usuario INT NOT NULL,
+    id_nembro INT,
+    id_carteira INT,
+    id_cartao INT,
+    id_condicao_pagamento INT,
+    id_fluxo_financeiro INT, 
+    id_fornecedor int, 
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_nembro) REFERENCES nembros(id),
+    FOREIGN KEY (id_carteira) REFERENCES carteiras(id),
+    FOREIGN KEY (id_cartao) REFERENCES cartoes(id),
+    FOREIGN KEY (id_condicao_pagamento) REFERENCES condicoes_pagamento(id),
+    FOREIGN KEY (id_fluxo_financeiro) REFERENCES fluxo_financeiro(id),
+    FOREIGN KEY (id_fornecedor) REFERENCES fornecedores(id),
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+    
+
 
 CREATE TABLE contas_receber (
     id SERIAL PRIMARY KEY,
