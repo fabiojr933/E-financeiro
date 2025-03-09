@@ -27,7 +27,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($listaContasPaga as $pag) { ?>
+                <?php foreach ($listaContasPagar as $pag) { ?>
                   <tr>
                     <td><?php echo $pag->id ?></td>
                     <td><?php echo $pag->fornecedor ?></td>
@@ -56,9 +56,9 @@
 <div class="modal fade" id="modal-default">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="<?php echo URL_BASE ?>pagar/volta_pendente" method="post">
+      <form action="<?php echo URL_BASE ?>pagar/excluir" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Deseja realmente cancelar a baixa ?</h4>
+          <h4 class="modal-title">Deseja realmente excluir ?</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

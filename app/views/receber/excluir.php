@@ -6,12 +6,12 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-footer clearfix">
-          <a href="<?php echo URL_BASE ?>pagamento/novo" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Novo</a>
+          <a href="<?php echo URL_BASE ?>receber/novo" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Novo</a>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Lista de pagamentos</h3>
+            <h3 class="card-title">Lista de recebimento</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -19,7 +19,7 @@
               <thead>
                 <tr>
                   <th style="width: 10%;">Id</th>
-                  <th>Fornecedor</th>
+                  <th>Cliente</th>
                   <th>Tipo</th>
                   <th>Valor</th>
                   <th>Vencimento</th>
@@ -27,15 +27,15 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($listaContasPaga as $pag) { ?>
+                <?php foreach ($listaContasReceber as $rec) { ?>
                   <tr>
-                    <td><?php echo $pag->id ?></td>
-                    <td><?php echo $pag->fornecedor ?></td>
-                    <td><small class="badge badge-<?php echo $pag->pago == 1 ? "info" : "danger" ?>"><?php echo ($pag->pago == 0 ? 'Pendente' : 'Pago') ?></small></td>
-                    <td><small class="badge badge-danger"><?php echo $pag->valor ?></small></td>
-                    <td><?php echo (new DateTime($pag->vencimento))->format('d/m/Y'); ?></td>
+                    <td><?php echo $rec->id ?></td>
+                    <td><?php echo $rec->cliente ?></td>
+                    <td><small class="badge badge-<?php echo $rec->pago == 1 ? "info" : "danger" ?>"><?php echo ($rec->pago == 0 ? 'Pendente' : 'Recebido') ?></small></td>
+                    <td><small class="badge badge-danger"><?php echo $rec->valor ?></small></td>
+                    <td><?php echo (new DateTime($rec->vencimento))->format('d/m/Y'); ?></td>
                     <td class="d-flex justify-content-end">
-                    <button type="button" onclick="document.getElementById('id_pag').value = '<?php echo  $pag->id ?>'" data-toggle="modal" data-target="#modal-default" class="btn btn-danger btn-sm me-1"><i class="fas fa-trash-alt"></i></button>
+                    <button type="button" onclick="document.getElementById('id_rec').value = '<?php echo  $rec->id ?>'" data-toggle="modal" data-target="#modal-default" class="btn btn-danger btn-sm me-1"><i class="fas fa-trash-alt"></i></button>
 
                     </td>
                   </tr>
@@ -56,15 +56,15 @@
 <div class="modal fade" id="modal-default">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="<?php echo URL_BASE ?>pagar/volta_pendente" method="post">
+      <form action="<?php echo URL_BASE ?>receber/excluir" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Deseja realmente cancelar a baixa ?</h4>
+          <h4 class="modal-title">Deseja realmente excluir ?</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="id_pag" name="id" value="" />
+          <input type="hidden" id="id_rec" name="id" value="" />
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>

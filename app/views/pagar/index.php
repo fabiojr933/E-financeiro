@@ -6,12 +6,12 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-footer clearfix">
-          <a href="<?php echo URL_BASE ?>lancamento/novo" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Novo</a>
+          <a href="<?php echo URL_BASE ?>pagar/novo" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Novo</a>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Lista de lancamentos</h3>
+            <h3 class="card-title">Lista de contas a pagar</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -19,23 +19,23 @@
               <thead>
                 <tr>
                   <th style="width: 10%;">Id</th>
-                  <th>Nome</th>
+                  <th>Fornecedor</th>
                   <th>Tipo</th>
                   <th>Valor</th>
-                  <th>Data</th>
+                  <th>Vencimento</th>
                   <th class="d-flex justify-content-end">Ações</th> <!-- Alinha o cabeçalho à direita -->
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($listaLancamento as $lanc) { ?>
+                <?php foreach ($listaContasPagar as $pag) { ?>
                   <tr>
-                    <td><?php echo $lanc->id ?></td>
-                    <td><?php echo $lanc->descricao ?></td>
-                    <td><small class="badge badge-<?php echo ($lanc->tipo == "Entrada") ? "info" : "danger" ?>"><?php echo $lanc->tipo ?></small></td>
-                    <td><small class="badge badge-danger"><?php echo $lanc->valor ?></small></td>
-                    <td><?php echo (new DateTime($lanc->data_pag))->format('d/m/Y'); ?></td>
+                    <td><?php echo $pag->id ?></td>
+                    <td><?php echo $pag->fornecedor ?></td>
+                    <td><small class="badge badge-<?php echo $pag->pago == 1 ? "info" : "danger" ?>"><?php echo ($pag->pago == 0 ? 'Pendente' : 'Pago') ?></small></td>
+                    <td><small class="badge badge-danger"><?php echo $pag->valor ?></small></td>
+                    <td><?php echo (new DateTime($pag->vencimento))->format('d/m/Y'); ?></td>
                     <td class="d-flex justify-content-end">
-                      <a href="<?php echo URL_BASE . "lancamento/impressao/" . $lanc->id; ?>"
+                      <a href="<?php echo URL_BASE . "pagar/impressao/" . $pag->id; ?>"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn btn-success btn-sm me-1">

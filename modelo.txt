@@ -115,115 +115,27 @@ CREATE TABLE contas_pagar (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
     
 
-
 CREATE TABLE contas_receber (
-    id SERIAL PRIMARY KEY,
-    cliente_id INT REFERENCES clientes(id),
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     descricao VARCHAR(255) NOT NULL,
     valor DECIMAL(15,2) NOT NULL,
-    valor_recebido DECIMAL(15,2) DEFAULT 0.00,
-    vencimento DATE NOT NULL,
-    fluxo_id INT REFERENCES fluxos_financeiros(id),
-    recebido BOOLEAN DEFAULT FALSE,
-    recebido_em DATE,
-    carteira_id INT REFERENCES carteiras(id),
-    banco_id INT REFERENCES bancos(id),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE lancamentos (
-    id SERIAL PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
-    valor DECIMAL(15,2) NOT NULL,
-    data DATE NOT NULL,
-    tipo VARCHAR(50) CHECK (tipo IN ('entrada', 'saida')),
-    fluxo_id INT REFERENCES fluxos_financeiros(id),
-    carteira_id INT REFERENCES carteiras(id),
-    banco_id INT REFERENCES bancos(id),
-    cartao_id INT REFERENCES cartoes_credito(id),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE cartoes_credito (
-    id SERIAL PRIMARY KEY,
-    banco_id INT REFERENCES bancos(id),
-    limite DECIMAL(15,2) NOT NULL,
-    saldo DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-    vencimento_fatura DATE NOT NULL
-);
-
-CREATE TABLE pagamentos_cartao (
-    id SERIAL PRIMARY KEY,
-    cartao_id INT REFERENCES cartoes_credito(id),
-    conta_pagar_id INT REFERENCES contas_pagar(id),
-    lancamento_id INT REFERENCES lancamentos(id),
-    valor DECIMAL(15,2) NOT NULL,
+    valor_pago DECIMAL(15,2) DEFAULT 0.00,
+    vencimento DATE NOT NULL,   
     pago BOOLEAN DEFAULT FALSE,
-    pago_em DATE
-);
-
-CREATE TABLE historico_transacoes (
-    id SERIAL PRIMARY KEY,
-    conta_id INT,
-    tipo_conta VARCHAR(20) CHECK (tipo_conta IN ('pagar', 'receber')),
-    status VARCHAR(20) CHECK (status IN ('pendente', 'pago', 'recebido')),
-    data_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    usuario_id INT REFERENCES usuarios(id),
-    saldo_anterior DECIMAL(15,2),
-    saldo_atual DECIMAL(15,2),
-    observacao TEXT,
-    carteira_id INT REFERENCES carteiras(id),
-    banco_id INT REFERENCES bancos(id),
-    cartao_id INT REFERENCES cartoes_credito(id),
-    FOREIGN KEY (conta_id) REFERENCES contas_pagar(id) ON DELETE CASCADE
-        WHEN tipo_conta = 'pagar' ELSE REFERENCES contas_receber(id) ON DELETE CASCADE
-);
-
--- TRIGGER PARA ATUALIZAR SALDO AUTOMATICAMENTE
-CREATE OR REPLACE FUNCTION atualizar_saldo()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF TG_OP = 'INSERT' THEN
-        IF NEW.tipo = 'entrada' THEN
-            UPDATE carteiras SET saldo = saldo + NEW.valor WHERE id = NEW.carteira_id;
-            UPDATE bancos SET saldo = saldo + NEW.valor WHERE id = NEW.banco_id;
-            UPDATE cartoes_credito SET saldo = saldo - NEW.valor WHERE id = NEW.cartao_id;
-        ELSIF NEW.tipo = 'saida' THEN
-            UPDATE carteiras SET saldo = saldo - NEW.valor WHERE id = NEW.carteira_id;
-            UPDATE bancos SET saldo = saldo - NEW.valor WHERE id = NEW.banco_id;
-            UPDATE cartoes_credito SET saldo = saldo + NEW.valor WHERE id = NEW.cartao_id;
-        END IF;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trigger_atualizar_saldo
-AFTER INSERT ON lancamentos
-FOR EACH ROW
-EXECUTE FUNCTION atualizar_saldo();
-
-
-
-
-
-
-CREATE OR REPLACE FUNCTION validar_limite_cartao()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.tipo = 'saida' AND NEW.cartao_id IS NOT NULL THEN
-        DECLARE saldo_atual DECIMAL(15,2);
-        SELECT saldo INTO saldo_atual FROM cartoes_credito WHERE id = NEW.cartao_id;
-        IF saldo_atual + NEW.valor > (SELECT limite FROM cartoes_credito WHERE id = NEW.cartao_id) THEN
-            RAISE EXCEPTION 'Limite do cartão de crédito excedido!';
-        END IF;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trigger_validar_limite_cartao
-BEFORE INSERT ON lancamentos
-FOR EACH ROW
-EXECUTE FUNCTION validar_limite_cartao();
-
+    pago_em DATE,
+    observacao VARCHAR(255), 
+    id_usuario INT NOT NULL,
+    id_nembro INT,
+    id_carteira INT,
+    id_cartao INT,
+    id_condicao_pagamento INT,
+    id_fluxo_financeiro INT, 
+    id_cliente int, 
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_nembro) REFERENCES nembros(id),
+    FOREIGN KEY (id_carteira) REFERENCES carteiras(id),
+    FOREIGN KEY (id_cartao) REFERENCES cartoes(id),
+    FOREIGN KEY (id_condicao_pagamento) REFERENCES condicoes_pagamento(id),
+    FOREIGN KEY (id_fluxo_financeiro) REFERENCES fluxo_financeiro(id),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id),
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP);

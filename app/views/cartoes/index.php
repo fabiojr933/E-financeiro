@@ -18,6 +18,7 @@
               <thead>
                 <tr>
                   <th style="width: 10%;">Id</th>
+                  <th>Titular</th>
                   <th>Nome</th>
                   <th>Tipo</th>
                   <th class="d-flex justify-content-end">Ações</th> <!-- Alinha o cabeçalho à direita -->
@@ -27,6 +28,7 @@
                 <?php foreach ($listaCartoes as $cartoes) { ?>
                   <tr>
                     <td><?php echo $cartoes->id ?></td>
+                    <td><?php echo $cartoes->titular ?></td>
                     <td><?php echo $cartoes->nome ?></td>
                     <td><small class="badge badge-<?php echo ($cartoes->tipo == "Debito") ? "info" : "danger" ?>"><?php echo $cartoes->tipo ?></small></td>                 
                     <td class="d-flex justify-content-end"> <!-- Alinha as ações à direita -->

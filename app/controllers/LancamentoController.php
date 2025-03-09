@@ -56,10 +56,10 @@ class LancamentoController extends Controller
         $this->load("template", $dados);
     }
 
-    public function cancelamento()
+    public function deletar()
     {
         $dados['listaLancamento'] =  $this->LancamentoModel->lista_lancamento($this->id_usuario);
-        $dados["view"]       = "lancamento/cancelamento";
+        $dados["view"]       = "lancamento/excluir";
         $this->load("template", $dados);
     }
 
@@ -94,12 +94,14 @@ class LancamentoController extends Controller
         $this->redirect(URL_BASE . 'lancamento/index');
     }
 
+    
+
     public function excluir()
     {
         $lancamento = new \stdClass();
         $lancamento->id = $_POST['id'];
         Service::excluir($this->tabela, $this->campo, $lancamento->id);
-        $this->redirect(URL_BASE . "lancamento/cancelamento");
+        $this->redirect(URL_BASE . "lancamento/deletar");
     }
     public function impressao($id)
     {

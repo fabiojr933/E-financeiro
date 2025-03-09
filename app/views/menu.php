@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="<?php echo URL_BASE ?>assets/index3.html" class="brand-link">
+  <a href="<?php echo URL_BASE ?>" class="brand-link">
     <img src="<?php echo URL_BASE ?>assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">E-Financeiro</span>
   </a>
@@ -38,7 +38,7 @@
             <li class="nav-item">
               <a href="<?php echo URL_BASE ?>carteira/index" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Carterias</p>
+                <p>Carteiras</p>
               </a>
             </li>           
             <li class="nav-item">
@@ -86,20 +86,20 @@
             <li class="nav-item">
               <a href="<?php echo URL_BASE ?>lancamento/index" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Lançamentos</p>
+                <p>Novo</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>lancamento/cancelamento" class="nav-link">
+              <a href="<?php echo URL_BASE ?>lancamento/deletar" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Cancelamento</p>
+                <p>Excluir</p>
               </a>
             </li>
           </ul>
         </li>
 
         <li class="nav-item">
-          <a href="<?php echo URL_BASE ?>assets/#" class="nav-link">
+          <a href="<?php echo URL_BASE ?>" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
               Contas a receber
@@ -108,21 +108,27 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>nembro/index" class="nav-link">
+              <a href="<?php echo URL_BASE ?>receber/index" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Cadastros</p>
+                <p>Novo</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>carteira/index" class="nav-link">
+              <a href="<?php echo URL_BASE ?>receber/baixa" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Baixa</p>
+                <p>Receber</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>pagamento/index" class="nav-link">
+              <a href="<?php echo URL_BASE ?>receber/cancelamento" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Cancelamento</p>
+                <p>Canc. recebimento</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_BASE ?>receber/deletar" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Excluir</p>
               </a>
             </li>
           </ul>
@@ -130,7 +136,7 @@
 
 
         <li class="nav-item">
-          <a href="<?php echo URL_BASE ?>assets/#" class="nav-link">
+          <a href="<?php echo URL_BASE ?>" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
               Contas a pagar
@@ -139,21 +145,27 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>pagar/novo" class="nav-link">
+              <a href="<?php echo URL_BASE ?>pagar/index" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Novo</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>carteira/index" class="nav-link">
+              <a href="<?php echo URL_BASE ?>pagar/baixa" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Baixa</p>
+                <p>Pagar</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo URL_BASE ?>pagamento/index" class="nav-link">
+              <a href="<?php echo URL_BASE ?>pagar/cancelamento" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Cancelamento</p>
+                <p>Canc. pagamento</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_BASE ?>pagar/deletar" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Excluir</p>
               </a>
             </li>
           </ul>

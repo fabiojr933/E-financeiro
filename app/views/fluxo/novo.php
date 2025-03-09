@@ -27,7 +27,7 @@
                 <div class="row">                  
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label>Minimal</label>
+                      <label>Tipo</label>
                       <select class="form-control select2bs4" style="width: 100%;" name="tipo">
                         <option>Entrada</option>
                         <option>Saida</option>

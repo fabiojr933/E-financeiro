@@ -9,26 +9,26 @@ use app\models\dao\Nembro as NembroModel;
 use app\models\dao\Pagamento as PagamentoModel;
 use app\models\dao\Carteira as CarteirasModel;
 use app\models\dao\Cartoes as CartoesModel;
-use app\models\dao\pagar as PagarModel;
-use app\models\dao\Fornecedor as FornecedorModel;
+use app\models\dao\Receber as ReceberModel;
+use app\models\dao\Cliente as ClienteModel;
 use app\models\service\Service;
 use DateTime;
 use TCPDF;
 
 require_once('vendor/autoload.php');
 
-class PagarController extends Controller
+class ReceberController extends Controller
 {
     private $id_usuario;
     private $campo = "id";
-    private $tabela = "contas_pagar";
+    private $tabela = "contas_receber";
     private $FluxoModel;
     private $NembroModel;
     private $pagamentoModel;
     private $carteiraModel;
     private $cartoesModel;
-    private $pagarModel;
-    private $fornecedorModel;
+    private $ReceberModel;
+    private $clienteModel;
 
     public function __construct()
     {
@@ -48,112 +48,114 @@ class PagarController extends Controller
         $cartao = new CartoesModel();
         $this->cartoesModel = $cartao;
 
-        $pagar = new PagarModel();
-        $this->pagarModel = $pagar;
+        $receber = new ReceberModel();
+        $this->ReceberModel = $receber;
 
-        $fornecedor = new FornecedorModel();
-        $this->fornecedorModel = $fornecedor;
+        $cliente = new ClienteModel();
+        $this->clienteModel = $cliente;
     }
 
     public function index()
     {
-        $dados['listaContasPagar'] = $this->pagarModel->lista_contas_pagar($this->id_usuario);
-        $dados["view"]       = "pagar/index";
+        $dados['listaContasReceber'] = $this->ReceberModel->lista_contas_receber($this->id_usuario);
+        $dados["view"]       = "receber/index";
         $this->load("template", $dados);
     }
 
     public function deletar()
     {
-        $dados['listaContasPagar'] = $this->pagarModel->lista_contas_pagar_delete($this->id_usuario);
-        $dados["view"]       = "pagar/excluir";
+        $dados['listaContasReceber'] = $this->ReceberModel->lista_contas_receber_delete($this->id_usuario);
+        $dados["view"]       = "receber/excluir";
         $this->load("template", $dados);
     }
 
     public function cancelamento()
     {
-        $dados['listaContasPaga'] = $this->pagarModel->lista_contas_pagar_pagas($this->id_usuario);
-        $dados["view"]       = "pagar/cancelamento";
+        $dados['listaContasRecebidas'] = $this->ReceberModel->lista_contas_receber_pagas($this->id_usuario);
+        $dados["view"]       = "receber/cancelamento";
         $this->load("template", $dados);
     }
 
     public function novo()
     {
-        $dados["fluxo_saida"] = $this->FluxoModel->lista_saida($this->id_usuario);
+        $dados["fluxo_entrada"] = $this->FluxoModel->lista_entrada($this->id_usuario);
         $dados["fluxo_nembro"] = $this->NembroModel->lista_id($this->id_usuario);
-        $dados["fluxo_fornecedor"] = $this->fornecedorModel->lista_id($this->id_usuario);
-        $dados["view"]       = "pagar/novo";
+        $dados["fluxo_cliente"] = $this->clienteModel->lista_id($this->id_usuario);
+        $dados["view"]       = "receber/novo";
         $this->load("template", $dados);
     }
     public function salvar()
     {
         $valor                               =  $_POST['valor'];
         $valor = str_replace(',', '.', preg_replace('/[^\d,]/', '',  $valor));
-        $pagar = new \stdClass();
-        $pagar->descricao               = $_POST['descricao'];
-        $pagar->valor                   =  $valor;
-        $pagar->vencimento              = $_POST['vencimento'];
-        $pagar->observacao              = $_POST['observacao'];
-        $pagar->id_nembro               = $_POST['id_nembro'];
-        $pagar->id_fornecedor           = $_POST['id_fornecedor'];
-        $pagar->id_fluxo_financeiro     = $_POST['id_fluxo_financeiro'];
-        $pagar->id_usuario              = $this->id_usuario;   //print_r($pagar); exit;
-        $this->pagarModel->salvar_pagar($pagar);
-        $this->redirect(URL_BASE . 'pagar/index');
+        $receber = new \stdClass();
+        $receber->descricao               = $_POST['descricao'];
+        $receber->valor                   =  $valor;
+        $receber->vencimento              = $_POST['vencimento'];
+        $receber->observacao              = $_POST['observacao'];
+        $receber->id_nembro               = $_POST['id_nembro'];
+        $receber->id_cliente           = $_POST['id_cliente'];
+        $receber->id_fluxo_financeiro     = $_POST['id_fluxo_financeiro'];
+        $receber->id_usuario              = $this->id_usuario;   //print_r($Receber); exit;
+        $this->ReceberModel->salvar_receber($receber);
+        $this->redirect(URL_BASE . 'receber/index');
     }
 
     public function excluir()
     {
-        $pagar = new \stdClass();
-        $pagar->id = $_POST['id'];
-        Service::excluir($this->tabela, $this->campo, $pagar->id);
-        $this->redirect(URL_BASE . "pagar/deletar");
+        $receber = new \stdClass();
+        $receber->id = $_POST['id'];
+        Service::excluir($this->tabela, $this->campo, $receber->id);
+        $this->redirect(URL_BASE . "receber/deletar");
     }
 
     public function baixa()
     {
         $dados["fluxo_saida"] = $this->FluxoModel->lista_saida($this->id_usuario);
-        $dados['listaContasPagarPendente'] = $this->pagarModel->lista_contas_pagar_pendente($this->id_usuario);
+        $dados['listaContasReceberPendente'] = $this->ReceberModel->lista_contas_receber_pendente($this->id_usuario);
         $dados["fluxo_pagamento"] = $this->pagamentoModel->lista_id($this->id_usuario);
         $dados["fluxo_carteira"] = $this->carteiraModel->lista_id($this->id_usuario);
         $dados["fluxo_cartao"] = $this->cartoesModel->lista_id($this->id_usuario);
-        $dados["view"]       = "pagar/baixa";
+        $dados["view"]       = "receber/baixa";
         $this->load("template", $dados);
     }
 
-    public function pagamento()
+    public function recebimento()
     {
         $dataAtual = new DateTime();
-        $pagar = new \stdClass();
-        $pagar->id                       = $_POST['id'] ?? null;
-        $pagar->pago_em                  = $dataAtual->format('Y-m-d');
-        $pagar->valor_pago               = $_POST['valor_pago'] ?? null;
-        $pagar->id_condicao_pagamento    = $_POST['id_condicao_pagamento'] ?? null;
-        $pagar->id_carteira              = $_POST['id_carteira'] ?? null;
-        $pagar->id_cartao                = $_POST['id_cartao'] ?? null;
-        $pagar->id_usuario               = $this->id_usuario ?? null;
-        $pagar->pago                     = 1;
-        $this->pagarModel->pagamento($pagar);
-        $this->redirect(URL_BASE . 'pagar/baixa');
+        $receber = new \stdClass();
+        $receber->pago_em                  = $dataAtual->format('Y-m-d');
+        $receber->id                       = $_POST['id'] ?? null;
+        $receber->valor_pago               = $_POST['valor_pago'] ?? null;
+        $receber->id_condicao_pagamento    = $_POST['id_condicao_pagamento'] ?? null;
+        $receber->id_carteira              = $_POST['id_carteira'] ?? null;
+        $receber->id_cartao                = $_POST['id_cartao'] ?? null;
+        $receber->id_usuario               = $this->id_usuario ?? null;
+        $receber->pago                     = 1;
+      
+       
+        $this->ReceberModel->recebimento($receber);
+        $this->redirect(URL_BASE . 'receber/baixa');
     }
 
     public function volta_pendente()
     {
-        $pagar = new \stdClass();
-        $pagar->id                       = $_POST['id'] ?? null;
-        $pagar->valor_pago               =  null;
-        $pagar->id_condicao_pagamento    =  null;
-        $pagar->id_carteira              =  null;
-        $pagar->id_cartao                =  null;
-        $pagar->id_usuario               = $this->id_usuario ?? null;
-        $pagar->pago                     = 0;
-        $pagar->pago_em                  = null;
-        $this->pagarModel->pagamento($pagar);
-        $this->redirect(URL_BASE . 'pagar/cancelamento');
+        $receber = new \stdClass();
+        $receber->id                       = $_POST['id'] ?? null;
+        $receber->valor_pago               =  null;
+        $receber->id_condicao_pagamento    =  null;
+        $receber->id_carteira              =  null;
+        $receber->id_cartao                =  null;
+        $receber->id_usuario               = $this->id_usuario ?? null;
+        $receber->pago                     = 0;
+        $receber->pago_em                  = null;
+        $this->ReceberModel->recebimento($receber);
+        $this->redirect(URL_BASE . 'receber/cancelamento');
     }
 
     public function impressao($id)
     {
-        $pag =  $this->pagarModel->id_pagar($this->id_usuario, $id);
+        $pag =  $this->ReceberModel->id_Receber($this->id_usuario, $id);
         $vencimento = date('d/m/Y', strtotime($pag->vencimento));
         $criado_em = date('d/m/Y H:i:s', strtotime($pag->criado_em));
         $pag->pago = $pag->pago == 1 ? 'Pago' : 'Pendente';
@@ -193,7 +195,7 @@ class PagarController extends Controller
 
         // Itens
         $items = [
-            ['A Pagar', $pag->nembro, $pag->valor, $pag->pago, $pag->fluxo_financeiro]
+            ['A Receber', $pag->nembro, $pag->valor, $pag->pago, $pag->fluxo_financeiro]
         ];
 
         $pdf->SetFont('helvetica', '', 10);

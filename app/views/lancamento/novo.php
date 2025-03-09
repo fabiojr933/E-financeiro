@@ -85,7 +85,7 @@
                                             <label>Escolha o cartão</label>
                                             <select class="form-control select2bs4" style="width: 100%;" id="id_cartao" name="id_cartao">
                                                 <?php foreach ($fluxo_cartao as $crt) {  ?>
-                                                    <option value="<?php echo $crt->id ?>"><?php echo $crt->nome ?></option>
+                                                    <option value="<?php echo $crt->id ?>"><?php echo $crt->titular ?> - <?php echo $crt->nome ?> <?php echo $crt->tipo ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -114,10 +114,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Observação</label>
-                                        <input type="text" class="form-control" placeholder="Observacao" name="observacao" required>
+                                        <input type="text" class="form-control" placeholder="Observacao" name="observacao" >
                                     </div>
                                 </div>
                             </div>

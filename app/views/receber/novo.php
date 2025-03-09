@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-footer clearfix">
-                    <a href="<?php echo URL_BASE ?>pagar/index" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
+                    <a href="<?php echo URL_BASE ?>receber/index" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Voltar</a>
                 </div>
 
 
@@ -18,7 +18,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="<?php echo URL_BASE ?>pagar/salvar" method="post">
+                        <form action="<?php echo URL_BASE ?>receber/salvar" method="post">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Descrição</label>
@@ -52,10 +52,10 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Fornecedor</label>
-                                        <select class="form-control select2bs4" style="width: 100%;" name="id_fornecedor">
-                                            <?php foreach ($fluxo_fornecedor as $for) {  ?>
-                                                <option value="<?php echo $for->id ?>"><?php echo $for->nome ?></option>
+                                        <label>Cliente</label>
+                                        <select class="form-control select2bs4" style="width: 100%;" name="id_cliente">
+                                            <?php foreach ($fluxo_cliente as $clie) {  ?>
+                                                <option value="<?php echo $clie->id ?>"><?php echo $clie->nome ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -63,10 +63,10 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Fluxo financeiro de saida</label>
+                                        <label>Fluxo financeiro de entrada</label>
                                         <select class="form-control select2bs4" style="width: 100%;" id="id_saida" name="id_fluxo_financeiro">
-                                            <?php foreach ($fluxo_saida as $saida) {  ?>
-                                                <option value="<?php echo $saida->id ?>"><?php echo $saida->nome ?></option>
+                                            <?php foreach ($fluxo_entrada as $entrada) {  ?>
+                                                <option value="<?php echo $entrada->id ?>"><?php echo $entrada->nome ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
